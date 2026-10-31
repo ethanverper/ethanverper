@@ -33,10 +33,10 @@ A streaming and batch pipeline for two simulated assembly plants. It was deploye
 [How it was built, level by level, with screenshots →](https://github.com/ethanverper/manufacturing-scrap-and-stockout-alerts/blob/main/docs/project-story.md)
 
 #### Toolbox
-**Languages:** SQL · Python · PySpark · R
-**AWS:** S3 · Glue · Athena · Kinesis · Firehose · Lambda · DynamoDB · SNS · SQS · EMR · EventBridge · Redshift _(grows with each project)_
-**Practices:** Terraform · CI with GitHub Actions · data quality and reconciliation · statistical process control · least-privilege IAM · cost tracking
-**BI:** Power BI · Tableau
+- **Languages:** SQL · Python · PySpark · R
+- **AWS:** S3 · Glue · Athena · Kinesis · Firehose · Lambda · DynamoDB · SNS · SQS · EMR · EventBridge · Redshift _(grows with each project)_
+- **Practices:** Terraform · CI with GitHub Actions · data quality and reconciliation · statistical process control · least-privilege IAM · cost tracking
+- **BI:** Power BI · Tableau
 
 #### Currently studying
 AWS Certified Data Engineer – Associate · AWS Certified AI Practitioner
