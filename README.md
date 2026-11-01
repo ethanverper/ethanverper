@@ -21,7 +21,7 @@ Every project is deployed for real, documented with evidence from the run, torn 
 | GenAI | _coming soon_ | | | |
 
 #### Latest: manufacturing scrap and stock-out alerts
-A streaming and batch pipeline for two simulated assembly plants. It was deployed with 41 AWS resources for 42 minutes, then destroyed and verified clean.
+A streaming and batch pipeline for two simulated assembly plants. It was deployed with 41 AWS resources for 42 minutes, then destroyed and verified clean. **Actual cloud cost: $0.12.**
 - **Real time:** 1,011 live scans → **8 email alerts in seconds**, each routed to the right team, with 0 false alarms and 0 errors. Statistical process control replaced a fixed threshold that had 64% false alarms.
 - **Batch:** a PySpark job proves that every raw record is counted, recognized as a retry, or quarantined before it publishes anything (54,137 = 53,541 + 537 + 59).
 - **Findings:**
