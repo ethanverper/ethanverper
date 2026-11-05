@@ -1,36 +1,35 @@
 ### Hi, I'm Ethan Verduzco 👋
 
-I turn messy operational data into the numbers a business runs on: **finance, supply chain, manufacturing and insurance**.
+I build the data systems that turn messy operations into numbers a business can act on: from the business question and its KPIs to a cloud pipeline running for real, with its cost and its evidence.
 Data Science & Mathematics Engineer · M.S. Financial Management (Boston University).
 
 This profile is a growing portfolio of **end-to-end data projects on AWS**. Each one:
 - starts from a real business question;
 - defines 3–5 KPIs;
-- builds the pipeline that answers it: ingestion, processing, alerts, analytics, infrastructure as code and CI.
+- builds the pipeline that answers it: ingestion, processing, alerts, analytics, infrastructure as code and CI;
+- is **deployed for real**, documented with screenshots and logs from the run, torn down, and its actual cloud cost reported.
 
-Every project is deployed for real, documented with evidence from the run, torn down, and its actual cloud cost reported.
+The method is industry-agnostic. So far: manufacturing and finance. Next: supply chain, banking, tech and sports.
 
 #### Projects
 
-| Industry | Project | Business question | KPIs | Stack |
+| Project | Business question | KPIs | Stack | Proof |
 |---|---|---|---|---|
-| Manufacturing | [**manufacturing-scrap-and-stockout-alerts**](https://github.com/ethanverper/manufacturing-scrap-and-stockout-alerts) | Catch scrap and stock-outs on the factory floor in seconds, and know which supplier pays for them | Reject rate (SPC control limits) · stock coverage · throughput vs plan · scrap cost | Kinesis · Lambda · DynamoDB · SNS · Firehose · Glue (PySpark) · Athena · Terraform |
-| Finance | _coming soon_ | | | |
-| Supply chain | _coming soon_ | | | |
-| Risk & controls | _coming soon_ | | | |
-| GenAI | _coming soon_ | | | |
+| [**ap-duplicate-payment-detection**](https://github.com/ethanverper/ap-duplicate-payment-detection) · *Finance* | Are we paying any supplier invoice twice? Are we paying on time, or losing early-payment discounts? | $ at risk from duplicates (HIGH/MEDIUM confidence) · on-time % · DPO · discounts lost | S3 events · Lambda · Glue (PySpark) + **Data Quality** · Athena · SNS · Terraform | [evidence](https://github.com/ethanverper/ap-duplicate-payment-detection/blob/main/docs/evidence/README.md) |
+| [**manufacturing-scrap-and-stockout-alerts**](https://github.com/ethanverper/manufacturing-scrap-and-stockout-alerts) · *Manufacturing* | Catch scrap and stock-outs on the factory floor in seconds, and know which supplier pays for them | Reject rate (SPC control limits) · stock coverage · throughput vs plan · scrap cost | Kinesis · Lambda · DynamoDB · SNS · Firehose · Glue (PySpark) · Athena · Terraform | [evidence](https://github.com/ethanverper/manufacturing-scrap-and-stockout-alerts/blob/main/docs/evidence/README.md) |
 
-#### Latest: manufacturing scrap and stock-out alerts
-A streaming and batch pipeline for two simulated assembly plants. It was deployed with 41 AWS resources for 42 minutes, then destroyed and verified clean. **Actual cloud cost: $0.12.**
-- **Real time:** 1,011 live scans → **8 email alerts in seconds**, each routed to the right team, with 0 false alarms and 0 errors. Statistical process control replaced a fixed threshold that had 64% false alarms.
-- **Batch:** a PySpark job proves that every raw record is counted, recognized as a retry, or quarantined before it publishes anything (54,137 = 53,541 + 537 + 59).
-- **Findings:**
-  - one supplier lot at **13.9% defects**;
-  - a part at **0.89 days** of stock;
-  - **$169k of scrap recoverable** from suppliers.
-- **What the real run caught:** a missing IAM permission and a data gap read as "zero production". Both were fixed and are documented as [lessons learned](https://github.com/ethanverper/manufacturing-scrap-and-stockout-alerts/blob/main/docs/lessons-learned.md).
+#### Latest: accounts-payable duplicate payment detection
+An ERP drops one payment file per entity per day (Mexico and US). Deployed with 30 AWS resources for 29 minutes, then destroyed and verified clean.
+- **Every file is checked in seconds as it lands** (S3 event → Lambda): a control trailer, the header contract, and re-sent files ignored. A hand-edited file was rejected live, with the exact $1,000 that had been added.
+- **A PySpark job on Glue finds duplicate payments**: invoice numbers retyped (`FAC-0457` vs `fac 457`), advances paid twice, invoices resubmitted under new numbers. Graded against an answer key it never sees: **27 of 27 found, 0 false alarms, $195K at risk**.
+- **Glue Data Quality** ran a versioned DQDL ruleset: 11 of 11 rules passed.
+- **What the real run taught:**
+  - the account allowed only 10 concurrent Lambdas, and the asynchronous trigger absorbed 259 throttles without losing a file;
+  - one alert email never arrived, so email is a notification and not a record.
 
-[How it was built, level by level, with screenshots →](https://github.com/ethanverper/manufacturing-scrap-and-stockout-alerts/blob/main/docs/project-story.md)
+  Both are [lessons learned](https://github.com/ethanverper/ap-duplicate-payment-detection/blob/main/docs/lessons-learned.md).
+
+Before it: [manufacturing scrap and stock-out alerts](https://github.com/ethanverper/manufacturing-scrap-and-stockout-alerts). Streaming and batch, 41 AWS resources, 8 real-time alerts with 0 false alarms, **$0.12** of actual cloud cost.
 
 #### Toolbox
 - **Languages:** SQL · Python · PySpark · R
